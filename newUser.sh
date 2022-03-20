@@ -71,5 +71,4 @@ done
 echo $group
 
 
-useradd -g $group -s $shelltype -d $homepath -m $username
-passwd $username $PASSWORD
+useradd -g $group -s $shelltype -d $homepath -p $(openssl passwd -crypt $PASSWORD)-m $username
