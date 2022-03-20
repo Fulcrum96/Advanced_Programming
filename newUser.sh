@@ -33,7 +33,7 @@ while [ x$homepath = "x" ]; do
                 ;;
         esac
     done
-    if [[ -d "$homepath" ]] then 
+    if [ -d "$homepath" ] then 
             echo "$homepath ya existe en el sistema."
             homepath=""
     fi
