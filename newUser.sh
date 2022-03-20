@@ -16,7 +16,8 @@ while [ x$username = "x" ]; do
 done
 echo "Nuevo usuario: $username"
 
-read -p "Ingrese nombre completo: " realname
+read -p "Ingrese nombre completo: " fullname
+echo "Nombre completo de usuario: $fullname"
 
 read -sp "Ingrese la contraseña: " PASSWORD
 echo
@@ -76,4 +77,4 @@ done
 echo "Grupo: $group"
 
 
-useradd -g $group -s $shelltype -d $homepath -p $(openssl passwd -crypt $PASSWORD) -m $username
+useradd -g $group -s $shelltype -d $homepath -p $(openssl passwd -crypt $PASSWORD) -c $fullname -m $username
