@@ -59,12 +59,12 @@ while [ x$group = "x" ]; do
     read -p "Ingrese el grupo al que pertenecerá el usuario: " group
     if id -g $group >/dev/null 2>&1; then
         echo "El grupo ya existe."
+        break
     else
         groupadd $group
     fi
 done
 echo $group
-
 
 
 useradd -g $group -s $shelltype -d $homepath -m $username
