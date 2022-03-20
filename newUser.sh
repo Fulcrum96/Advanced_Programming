@@ -18,7 +18,7 @@ read -sp "Ingrese la contraseña: " PASSWORD
 #echo $homepath
 
 PS3="Seleccione la ubicación del directorio HOME: "
-homeoptions=("Default (/home$username)" "Personalizado")
+homeoptions=("Default (/home/$username)" "Personalizado")
 select chosenhome in "${homeoptions[@]}"; do
     case $chosenhome in 
         "Default (/home/$username)")
@@ -57,7 +57,7 @@ echo $shelltype
 
 while [ x$group = "x" ]; do
     read -p "Ingrese el grupo al que pertenecerá el usuario: " group
-    if id -g $group >dev/null 2>&1; then
+    if id -g $group >/dev/null 2>&1; then
         echo "El grupo ya existe."
     else
         groupadd $group
