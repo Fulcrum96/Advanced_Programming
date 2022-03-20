@@ -15,22 +15,28 @@ read -p "Ingrese nombre completo: " realname
 read -sp "Ingrese la contraseña: " PASSWORD
 echo
 
-PS3="Seleccione la ubicación del directorio HOME: "
-homeoptions=("Default (/home/$username)" "Personalizado")
-select chosenhome in "${homeoptions[@]}"; do
-    case $chosenhome in 
-        "Default (/home/$username)")
-            homepath="/home/$username"
-            break
-            ;;
-        "Personalizado")
-            read -p "Ingrese la ubicación del directorio HOME: " homepath
-            break
-            ;;
-        *)
-            echo "Opción $REPLY no válida."
-            ;;
-    esac
+while [ x$homepath = "x" ]; do
+    PS3="Seleccione la ubicación del directorio HOME: "
+    homeoptions=("Default (/home/$username)" "Personalizado")
+    select chosenhome in "${homeoptions[@]}"; do
+        case $chosenhome in 
+            "Default (/home/$username)")
+                homepath="/home/$username"
+                break
+                ;;
+            "Personalizado")
+                read -p "Ingrese la ubicación del directorio HOME: " homepath
+                break
+                ;;
+            *)
+                echo "Opción $REPLY no válida."
+                ;;
+        esac
+    done
+    if [[ -d "$homepath" ]] then 
+            echo "$homepath ya existe en el sistema."
+            homepath=""
+    fi
 done
 echo $homepath
 
@@ -57,6 +63,7 @@ while [ x$group = "x" ]; do
     read -p "Ingrese el grupo al que pertenecerá el usuario: " group
     if id -g $group >/dev/null 2>&1; then
         echo "El grupo ya existe."
+        group = ""
     else
         groupadd $group
     fi
@@ -64,4 +71,5 @@ done
 echo $group
 
 
-useradd -g $group -s $shelltype -d $homepath -p $PASSWORD -m $username
+useradd -g $group -s $shelltype -d $homepath -m $username
+passwd $username $PASSWORD
