@@ -63,7 +63,6 @@ while [ x$group = "x" ]; do
     read -p "Ingrese el grupo al que pertenecerá el usuario: " group
     if id -g $group >/dev/null 2>&1; then
         echo "El grupo ya existe."
-        group = ""
     else
         groupadd $group
     fi
