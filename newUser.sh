@@ -1,4 +1,10 @@
 #!/bin/bash 
+### INFO
+# Script en bash para crear nuevo usuario en Linux
+# Gustavo Martínez Mondragón
+# 20/03/2022
+### END INFO
+
 echo "Agregar nuevo usuario al sistema."
 
 while [ x$username = "x" ]; do
@@ -8,7 +14,7 @@ while [ x$username = "x" ]; do
         username=""
     fi
 done
-    echo $username
+echo "Nuevo usuario: $username"
 
 read -p "Ingrese nombre completo: " realname
 
@@ -38,7 +44,7 @@ while [ x$homepath = "x" ]; do
             homepath=""
     fi
 done
-echo $homepath
+echo "Ubicación del directorio HOME: $homepath"
 
 PS3="Seleccione el tipo de shell: "
 shelloptions=("Shell (normal)" "Bash")
@@ -57,7 +63,7 @@ select chosenshell in "${shelloptions[@]}"; do
             ;;
     esac
 done 
-echo $shelltype
+echo "$chosenshell seleccionado."
 
 while [ x$group = "x" ]; do
     read -p "Ingrese el grupo al que pertenecerá el usuario: " group
@@ -67,7 +73,7 @@ while [ x$group = "x" ]; do
         groupadd $group
     fi
 done
-echo $group
+echo "Grupo: $group"
 
 
-useradd -g $group -s $shelltype -d $homepath -p $(openssl passwd -crypt $PASSWORD)-m $username
+useradd -g $group -s $shelltype -d $homepath -p $(openssl passwd -crypt $PASSWORD) -m $username
